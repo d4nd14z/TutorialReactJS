@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getGifs } from '../helpers/getGifs';
 import { GifItem } from './GifItem';
+import { useFetchGifs } from '../hooks/useFetchGifs';
+
 
 interface IProps {
     id: number,
@@ -16,16 +17,7 @@ interface GIFImage {
 
 export const Category: React.FC<IProps> = ({ id, name, removeCategory }) => {
 
-    const [images, setImages] = useState<GIFImage[]>([]);
-
-    const getImages = async () => {
-        const newImages = await getGifs(name);
-        setImages(newImages);
-    }
-
-    useEffect(() => {
-        getImages();
-    }, []);
+    const { images, isLoading} = useFetchGifs(name);
 
     const handlerDelete = ():void => {        
         removeCategory(id); //Llamar a la funcion del componente padre (Esta funcion se recibe a traves del prop).
