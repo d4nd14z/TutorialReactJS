@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { GifItem } from './GifItem';
+import { GifItem } from '../components' //../components/index.ts;
 import { useFetchGifs } from '../hooks/useFetchGifs';
-
+import loadingGIF from "../assets/img/loading.gif";
 
 interface IProps {
     id: number,
@@ -17,7 +17,7 @@ interface GIFImage {
 
 export const Category: React.FC<IProps> = ({ id, name, removeCategory }) => {
 
-    const { images, isLoading} = useFetchGifs(name);
+    const {images, isLoading} = useFetchGifs(name);
 
     const handlerDelete = ():void => {        
         removeCategory(id); //Llamar a la funcion del componente padre (Esta funcion se recibe a traves del prop).
@@ -30,11 +30,16 @@ export const Category: React.FC<IProps> = ({ id, name, removeCategory }) => {
                 <button className="rounded-full h-6 w-6 float-right -mt-6 text-red-500" onClick={ handlerDelete }>✖</button>                
             </div>
             <hr className="border-gray-300"/> 
+
+            {  isLoading && ( <img src={loadingGIF} title="Cargando..." /> ) }            
+            
+            <div className="">
             {
                 images.map((img:GIFImage) => (
                     <GifItem key={img.id} { ...img } />
                 ))
-            }                                     
+            }                 
+            </div>                    
         </>
     );
 }
