@@ -22,14 +22,14 @@ export const GifExpertApp: React.FC<IProps> = ({ title, subtitle }) => {
         //Validar que no se inserte la misma categoria dos veces
         if (!categories.find(category => category.name.toLowerCase() === nameCategory.toLowerCase())){ 
             const newCategory = { id: categories.length + 1, name: nameCategory }
-            const arrayCategories:Icategory[] = [newCategory, ...categories]
+            const arrayCategories:ICategory[] = [newCategory, ...categories]
             setCategories(arrayCategories);
         } 
         setNameCategory("");       
     }
 
     //Agregar nuevas categorias (Si se presiona la tecla enter).
-    const keyPressHandler = (e:React.ChangeEvent<HTMLInputElement>): void => {        
+    const keyPressHandler = (e:React.KeyboardEvent<HTMLInputElement>): void => {        
         if (e.key === 'Enter'){
             e.preventDefault();
             if (nameCategory.trim().length <= 1) return; //No guardar categorias en blanco !!!

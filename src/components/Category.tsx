@@ -8,9 +8,15 @@ interface IProps {
     removeCategory: (id:number) => void
 }
 
+interface GIFImage {
+    id: string,
+    title: string,
+    url: string
+}
+
 export const Category: React.FC<IProps> = ({ id, name, removeCategory }) => {
 
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState<GIFImage[]>([]);
 
     const getImages = async () => {
         const newImages = await getGifs(name);
@@ -33,8 +39,8 @@ export const Category: React.FC<IProps> = ({ id, name, removeCategory }) => {
             </div>
             <hr className="border-gray-300"/> 
             {
-                images.map(({id, title, url}) => (
-                    <GifItem key={id} id={id} title={title} url={url} />
+                images.map((img:GIFImage) => (
+                    <GifItem key={img.id} { ...img } />
                 ))
             }                                     
         </>
